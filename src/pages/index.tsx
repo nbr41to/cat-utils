@@ -1,6 +1,7 @@
 import { Button } from '@mantine/core';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import Saya from '../../public/saya.svg';
 
 export default function Home() {
   const router = useRouter();
@@ -16,6 +17,8 @@ export default function Home() {
         />
         <link rel='icon' href='/favicon.ico' />
       </Head>
+
+      <Saya />
 
       <div>
         <Button onClick={() => router.push('/calculator')}>カロリー計算</Button>
