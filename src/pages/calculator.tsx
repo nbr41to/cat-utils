@@ -1,41 +1,7 @@
 import CalculatorTemplate from '@/components/features/calculator';
-import { Button, InputBase, Select } from '@mantine/core';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useMemo, useState } from 'react';
 
 export default function Calculator() {
-  const router = useRouter();
-
-  const [weight, setWeight] = useState(0);
-  const [calorie, setCalorie] = useState(0);
-  const [coefficientStr, setCoefficient] = useState('3.0');
-
-  const RER = useMemo(() => {
-    const kg = weight / 1000;
-    const result100 = kg ** 0.75 * 70 * 100;
-    const rounded = Math.round(result100);
-
-    return rounded / 100;
-  }, [weight]);
-
-  const DER = useMemo(() => {
-    const coefficient = parseInt(coefficientStr, 10);
-    const result100 = RER * coefficient * 100;
-    const rounded = Math.round(result100);
-
-    return rounded / 100;
-  }, [RER, coefficientStr]);
-
-  const rice = useMemo(() => {
-    const perGram = calorie / 100;
-    const result100 = (DER / perGram) * 100;
-
-    const rounded = Math.round(result100);
-
-    return rounded / 100;
-  }, [DER, calorie]);
-
   return (
     <>
       <Head>
