@@ -1,10 +1,7 @@
-import { Button, InputBase, Select } from '@mantine/core';
-import { useRouter } from 'next/router';
+import { InputBase, Select } from '@mantine/core';
 import { useMemo, useState } from 'react';
 
 export default function CatCalculator() {
-  const router = useRouter();
-
   const [weight, setWeight] = useState(0);
   const [calorie, setCalorie] = useState(0);
   const [coefficientStr, setCoefficient] = useState('3.0');
@@ -36,8 +33,8 @@ export default function CatCalculator() {
 
   return (
     <div>
-      <h3>猫が一日に必要な摂取カロリー量</h3>
-      <div>
+      <h2 className='text-lg'>猫が一日に必要な摂取カロリー量</h2>
+      <div className='space-y-2'>
         <InputBase
           fz='lg'
           label='体重（g）'
@@ -47,13 +44,18 @@ export default function CatCalculator() {
         <InputBase
           label='100gあたりのカロリー（cal）'
           type='number'
+          value={calorie}
           onChange={(e) => setCalorie(e.target.valueAsNumber)}
         />
         <Select
-          label='餌の種類から入力'
-          data={[{ label: 'Elmo（子猫用）', value: '422' }]}
-          value={coefficientStr}
-          onChange={(value) => setCoefficient(value || '3.0')}
+          placeholder='餌の種類から入力'
+          data={[
+            { label: 'ONE（子猫用）100g/390cal', value: '390' },
+            { label: 'ELMO（子猫用）100g/422cal', value: '422' },
+            { label: 'Supremo（子猫用）100g/385cal', value: '385' },
+          ]}
+          value={''}
+          onChange={(value) => setCalorie(parseInt(value || '0', 10))}
         />
         <Select
           label='ライフステージ'
@@ -74,18 +76,37 @@ export default function CatCalculator() {
           onChange={(value) => setCoefficient(value || '3.0')}
         />
       </div>
-      <div>
-        <h3>RER（安静時エネルギー要求量）</h3>
-        <div className='text-xl font-bold'>{RER} cal</div>
-        <div className='text-xs'>※ {`RER = [体重(kg)] × √0.75 × 70`}</div>
-        <h3>DER（1日あたりのエネルギー要求量）</h3>
-        <div className='text-xl font-bold'>{DER} cal</div>
-        <div className='text-xs'>※ {`DER = RER × [ライフステージ係数]`}</div>
-        <h3>与えるご飯の量（g）</h3>
-        <div className='text-xl font-bold'>{rice} g</div>
-        <div className='text-xs'>
-          ※ {`[与えるご飯のカロリー量(g)] = DER ÷ [100gあたりのカロリー]`}
-        </div>
+
+      <div className='space-y-2'>
+        <h2 className='text-lg'>結果</h2>
+        {!weight ? (
+          <div className='p-4 bg-white rounded'>体重を入力してください</div>
+        ) : (
+          <div>
+            <h3>RER（安静時エネルギー要求量）</h3>
+            <div className='text-xl font-bold'>{RER} cal</div>
+            <div className='text-xs'>※ {`RER = [体重(kg)] × √0.75 × 70`}</div>
+            <h3>DER（1日あたりのエネルギー要求量）</h3>
+            <div className='text-xl font-bold'>{DER} cal</div>
+            <div className='text-xs'>
+              ※ {`DER = RER × [ライフステージ係数]`}
+            </div>
+            {!calorie ? (
+              <div className='p-4 bg-white rounded'>
+                カロリーを入力してください
+              </div>
+            ) : (
+              <>
+                <h3>1日に与えるご飯の量（g）</h3>
+                <div className='text-xl font-bold'>{rice} g</div>
+                <div className='text-xs'>
+                  ※{' '}
+                  {`[与えるご飯のカロリー量(g)] = DER ÷ [100gあたりのカロリー]`}
+                </div>
+              </>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
