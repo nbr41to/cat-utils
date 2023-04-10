@@ -67,6 +67,7 @@ export default function CatCalculator() {
             { label: '標準体型の成猫（避妊・去勢済）', value: '1.2' },
             { label: '活動的な猫', value: '1.6' },
             { label: '肥満気味の猫', value: '1.0' },
+            { label: '病気の猫', value: '1.00' },
             { label: 'ダイエット中の猫', value: '0.8' },
             { label: '増量中の猫', value: '1.3' },
             { label: '高齢猫', value: '1.1' },
