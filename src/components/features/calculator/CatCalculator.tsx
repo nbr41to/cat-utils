@@ -1,9 +1,12 @@
-import { InputBase, Select } from '@mantine/core';
+import { InputBase, SegmentedControl, Select } from '@mantine/core';
 import { useMemo, useState } from 'react';
 
 export default function CatCalculator() {
+  const [isOther, setIsOther] = useState<'0' | '1'>('0');
   const [weight, setWeight] = useState(0);
   const [calorie, setCalorie] = useState(0);
+  const [otherCalorie, setOtherCalorie] = useState(0);
+  const [otherAmount, setOtherAmount] = useState(0);
   const [coefficientStr, setCoefficient] = useState('3.0');
 
   const RER = useMemo(() => {
@@ -24,12 +27,17 @@ export default function CatCalculator() {
 
   const rice = useMemo(() => {
     const perGram = calorie / 100;
-    const result100 = (DER / perGram) * 100;
+    const calPerDay =
+      DER -
+      (otherCalorie && otherAmount ? (otherCalorie * otherAmount) / 100 : 0);
+    console.log(calPerDay);
+    console.log((otherCalorie * otherAmount) / 100);
+    const result100 = (calPerDay / perGram) * 100;
 
     const rounded = Math.round(result100);
 
     return rounded / 100;
-  }, [DER, calorie]);
+  }, [DER, calorie, otherCalorie, otherAmount]);
 
   return (
     <div>
@@ -39,6 +47,7 @@ export default function CatCalculator() {
           fz='lg'
           label='体重（g）'
           type='number'
+          value={weight}
           onChange={(e) => setWeight(e.target.valueAsNumber)}
         />
         <InputBase
@@ -76,6 +85,32 @@ export default function CatCalculator() {
           value={coefficientStr}
           onChange={(value) => setCoefficient(value || '3.0')}
         />
+        <SegmentedControl
+          color='blue'
+          defaultValue='0'
+          data={[
+            { label: '他フードを併用しない', value: '0' },
+            { label: '他フードを併用する', value: '1' },
+          ]}
+          onChange={(value) => setIsOther(value as '0' | '1')}
+        />
+        {isOther === '1' && (
+          <>
+            <InputBase
+              label='他フードの100gあたりのカロリー（cal）'
+              type='number'
+              value={otherCalorie}
+              onChange={(e) => setOtherCalorie(e.target.valueAsNumber)}
+            />
+            <InputBase
+              fz='lg'
+              label='与える量（g）'
+              type='number'
+              value={otherAmount}
+              onChange={(e) => setOtherAmount(e.target.valueAsNumber)}
+            />
+          </>
+        )}
       </div>
 
       <div className='space-y-2'>
@@ -104,6 +139,14 @@ export default function CatCalculator() {
                   ※{' '}
                   {`[与えるご飯のカロリー量(g)] = DER ÷ [100gあたりのカロリー]`}
                 </div>
+                {otherCalorie && otherAmount ? (
+                  <div className='text-xs'>
+                    ※{' '}
+                    {`100g/${otherCalorie}calのフードを${otherAmount}gを与える場合`}
+                  </div>
+                ) : (
+                  <></>
+                )}
               </>
             )}
           </div>
