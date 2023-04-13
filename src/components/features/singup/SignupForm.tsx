@@ -1,25 +1,11 @@
+import { SignUpParams } from '@/types';
+import { signUpSchema } from '@/validations/signUpSchema';
 import { Button, InputBase } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
 import { FC } from 'react';
-import { z } from 'zod';
-
-const schema = z
-  .object({
-    email: z.string().email({ message: 'Invalid email' }),
-    password: z
-      .string()
-      .min(6, { message: 'Password should have at least 6 letters' }),
-    passwordConfirmation: z.string(),
-  })
-  .refine((data) => data.password === data.passwordConfirmation, {
-    message: 'Password confirmation does not match',
-    path: ['passwordConfirmation'],
-  });
-
-export type Params = { email: string; password: string };
 
 type Props = {
-  onSubmit: (params: Params) => Promise<void>;
+  onSubmit: (params: SignUpParams) => Promise<void>;
 };
 
 export const SignUpForm: FC<Props> = ({ onSubmit }) => {
@@ -29,20 +15,12 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
       password: '',
       passwordConfirmation: '',
     },
-    validate: zodResolver(schema),
+    validate: zodResolver(signUpSchema),
     validateInputOnBlur: true,
   });
 
-  console.log(form.errors);
-
   return (
-    <form
-      noValidate
-      onSubmit={form.onSubmit(
-        (values) => onSubmit(values),
-        (errors) => console.error(errors),
-      )}
-    >
+    <form noValidate onSubmit={form.onSubmit((values) => onSubmit(values))}>
       <InputBase
         type='email'
         label='メールアドレス'

@@ -1,14 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { within, userEvent, fireEvent } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
-import { SignUpForm as Component, Params } from './SignupForm';
+import { SignUpForm as Component } from './SignupForm';
+import { SignUpParams } from '@/types';
 
 const meta = {
   title: 'SignUp/SignUpForm',
   component: Component,
   argTypes: {},
   args: {
-    onSubmit: async (params: Params) => console.log(params),
+    onSubmit: async (params: SignUpParams) => console.log(params),
   },
 } satisfies Meta<typeof Component>;
 
@@ -21,53 +22,57 @@ export const Default: Story = {
 
 export const Success: Story = {
   args: {},
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    await userEvent.type(
-      canvas.getByLabelText('メールアドレス'),
-      'example@example.com',
-    );
+    await step('Enter email and password', async () => {
+      await userEvent.type(
+        canvas.getByLabelText('メールアドレス'),
+        'example@example.com',
+      );
+      await userEvent.type(
+        canvas.getByLabelText('パスワード'),
+        'a-random-password',
+      );
+      await userEvent.type(
+        canvas.getByLabelText('確認用パスワード'),
+        'a-random-password',
+      );
+    });
 
-    await userEvent.type(
-      canvas.getByLabelText('パスワード'),
-      'a-random-password',
-    );
-
-    await userEvent.type(
-      canvas.getByLabelText('確認用パスワード'),
-      'a-random-password',
-    );
-
-    await userEvent.click(canvas.getByRole('button'));
+    await step('Submit form', async () => {
+      await userEvent.click(canvas.getByRole('button'));
+    });
   },
 } satisfies Story;
 
 export const ValidationError: Story = {
   args: {},
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    // 👇 Simulate interactions with the component
-    await userEvent.type(canvas.getByLabelText('メールアドレス'), 'string');
+    await step('Enter email and password', async () => {
+      await userEvent.type(canvas.getByLabelText('メールアドレス'), 'string');
+      await userEvent.type(canvas.getByLabelText('パスワード'), 'short');
+      await userEvent.type(
+        canvas.getByLabelText('確認用パスワード'),
+        'missmatch',
+      );
+      await userEvent.tab();
+    });
 
-    await userEvent.type(canvas.getByLabelText('パスワード'), 'short');
+    await step('View validation error messages', async () => {
+      await expect(canvas.getByText('Invalid email')).toBeInTheDocument();
+      await expect(
+        canvas.getByText('Password should have at least 6 letters'),
+      ).toBeInTheDocument();
+      await expect(
+        canvas.getByText('Password confirmation does not match'),
+      ).toBeInTheDocument();
+    });
 
-    await userEvent.type(
-      canvas.getByLabelText('確認用パスワード'),
-      'missmatch',
-    );
-
-    await userEvent.tab();
-
-    await expect(canvas.getByRole('button')).toBeDisabled();
-
-    await expect(canvas.getByText('Invalid email')).toBeInTheDocument();
-    await expect(
-      canvas.getByText('Password should have at least 6 letters'),
-    ).toBeInTheDocument();
-    await expect(
-      canvas.getByText('Password confirmation does not match'),
-    ).toBeInTheDocument();
+    await step('Disabled submit', async () => {
+      await expect(canvas.getByRole('button')).toBeDisabled();
+    });
   },
 } satisfies Story;

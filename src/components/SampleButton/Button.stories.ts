@@ -14,33 +14,33 @@ const meta = {
       action: 'clicked',
     }, // なくても自動
   },
+
+  /* Default */
   args: {
     label: 'Button',
-    size: 'medium',
   },
 } satisfies Meta<typeof Button>;
 
 export default meta;
+
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Default: Story = {};
+
+export const Outline: Story = {
   args: {
-    primary: true,
+    outline: true,
   },
 } satisfies Story;
 
-export const Secondary: Story = {
-  args: {},
+export const Small: Story = {
+  args: {
+    size: 'small',
+  },
 };
 
 export const Large: Story = {
   args: {
     size: 'large',
-  },
-};
-
-export const Small: Story = {
-  args: {
-    size: 'small',
   },
 };

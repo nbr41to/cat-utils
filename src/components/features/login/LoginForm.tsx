@@ -18,13 +18,7 @@ export const LoginForm: FC<Props> = ({ onSubmit }) => {
   });
 
   return (
-    <form
-      noValidate
-      onSubmit={form.onSubmit(
-        (values) => onSubmit(values),
-        (errors) => console.error(errors),
-      )}
-    >
+    <form noValidate onSubmit={form.onSubmit((values) => onSubmit(values))}>
       <InputBase
         type='email'
         label='メールアドレス'
