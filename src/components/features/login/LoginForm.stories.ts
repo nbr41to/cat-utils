@@ -1,14 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { LoginForm as Component, Params } from './LoginForm';
+import { LoginForm as Component } from './LoginForm';
 import { userEvent, within } from '@storybook/testing-library';
+import { LoginParams } from '@/types';
 
 const meta = {
   title: 'Login/LoginForm',
   component: Component,
   argTypes: {},
   args: {
-    onSubmit: async (params: Params) => console.log(params),
+    onSubmit: async (params: LoginParams) => console.log(params),
   },
 } satisfies Meta<typeof Component>;
 
