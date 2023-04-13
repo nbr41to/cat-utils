@@ -6,25 +6,25 @@ import { useEffect, useState } from 'react';
 
 const mswSetUp = async () => {
   if (typeof window === 'undefined') {
-    const { server } = await import('@/msw/worker');
+    const { server } = await import('@/__mocks__/msw/worker');
     server.listen();
   } else {
-    const { worker } = await import('@/msw/worker');
+    const { worker } = await import('@/__mocks__/msw/worker');
     worker.start();
   }
 };
 
 export default function App({ Component, pageProps }: AppProps) {
-  const isDev = process.env.NODE_ENV === 'development';
+  const isDev = process.env.VERCEL_ENV !== 'production';
   const [mswPrepared, setMswPrepared] = useState(!isDev);
 
   useEffect(() => {
-    // if (process.env.NODE_ENV === 'development') {
-    (async () => {
-      await mswSetUp();
-      setMswPrepared(true);
-    })();
-    // }
+    if (isDev) {
+      (async () => {
+        await mswSetUp();
+        setMswPrepared(true);
+      })();
+    }
   }, []);
 
   if (!mswPrepared) return <LoadingOverlay visible={true} />;

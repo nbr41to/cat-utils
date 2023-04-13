@@ -9,7 +9,7 @@
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test-storybook": "test-storybook",
+    "test-storybook": "test-storybook --coverage",
     "report": "npx nyc report --reporter=lcov -t coverage/storybook --report-dir coverage/storybook"
   },
   "dependencies": {
