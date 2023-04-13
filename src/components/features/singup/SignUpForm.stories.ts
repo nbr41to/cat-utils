@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { within, userEvent, fireEvent } from '@storybook/testing-library';
+import { within, userEvent } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 import { SignUpForm as Component } from './SignupForm';
 import { SignUpParams } from '@/types';
+import { rest } from 'msw';
 
 const meta = {
   title: 'SignUp/SignUpForm',
@@ -10,6 +11,20 @@ const meta = {
   argTypes: {},
   args: {
     onSubmit: async (params: SignUpParams) => console.log(params),
+  },
+  parameters: {
+    msw: {
+      handlers: [
+        rest.get('/login', (req, res, ctx) => {
+          return res(
+            ctx.json({
+              firstName: 'Neil',
+              lastName: 'Maverick',
+            }),
+          );
+        }),
+      ],
+    },
   },
 } satisfies Meta<typeof Component>;
 

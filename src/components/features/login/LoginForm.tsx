@@ -1,12 +1,10 @@
+import type { FC } from 'react';
+import { LoginParams } from '@/types';
 import { Button, InputBase } from '@mantine/core';
-import { useForm, zodResolver } from '@mantine/form';
-import { FC } from 'react';
-import { z } from 'zod';
-
-export type Params = { email: string; password: string };
+import { useForm } from '@mantine/form';
 
 type Props = {
-  onSubmit: (params: Params) => Promise<void>;
+  onSubmit: (params: LoginParams) => Promise<void>;
 };
 
 export const LoginForm: FC<Props> = ({ onSubmit }) => {

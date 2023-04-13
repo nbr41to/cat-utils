@@ -1,8 +1,8 @@
+import type { FC } from 'react';
 import { SignUpParams } from '@/types';
 import { signUpSchema } from '@/validations/signUpSchema';
 import { Button, InputBase } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
-import { FC } from 'react';
 
 type Props = {
   onSubmit: (params: SignUpParams) => Promise<void>;
