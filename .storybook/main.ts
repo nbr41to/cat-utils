@@ -7,6 +7,7 @@ const config: StorybookConfig = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
+    '@storybook/addon-a11y',
     '@storybook/addon-coverage',
   ],
   framework: {
@@ -27,7 +28,7 @@ const config: StorybookConfig = {
     ];
     baseConfig.resolve.alias = {
       ...baseConfig.resolve.alias,
-      '@': path.resolve(__dirname, '../src'),
+      '@/': path.resolve(__dirname, '../src/'),
     };
 
     return baseConfig;
