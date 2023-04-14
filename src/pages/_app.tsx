@@ -15,7 +15,8 @@ const mswSetUp = async () => {
 };
 
 export default function App({ Component, pageProps }: AppProps) {
-  const isDev = process.env.NEXT_PUBLIC_VERCEL_ENV !== 'production';
+  const isDev = true; // TODO: APIつなぎ込み時に差し替え
+  // const isDev = process.env.NEXT_PUBLIC_VERCEL_ENV !== 'production';
   const [mswPrepared, setMswPrepared] = useState(!isDev);
 
   useEffect(() => {
