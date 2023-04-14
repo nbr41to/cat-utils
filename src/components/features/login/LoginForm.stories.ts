@@ -9,6 +9,7 @@ const meta = {
   component: Component,
   argTypes: {},
   args: {
+    // eslint-disable-next-line no-console
     onSubmit: async (params: LoginParams) => console.log(params),
   },
 } satisfies Meta<typeof Component>;

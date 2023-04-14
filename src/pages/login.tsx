@@ -3,6 +3,7 @@ import { LoginParams } from '@/types';
 
 export default function Login() {
   const handleSubmit = async (values: LoginParams) => {
+    // eslint-disable-next-line no-console
     console.log(values);
   };
 

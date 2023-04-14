@@ -30,10 +30,7 @@ export default function CatCalculator() {
     const calPerDay =
       DER -
       (otherCalorie && otherAmount ? (otherCalorie * otherAmount) / 100 : 0);
-    console.log(calPerDay);
-    console.log((otherCalorie * otherAmount) / 100);
     const result100 = (calPerDay / perGram) * 100;
-
     const rounded = Math.round(result100);
 
     return rounded / 100;

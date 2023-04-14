@@ -5,6 +5,7 @@ import axios from 'axios';
 export default function Signup() {
   const handleSubmit = async (values: SignUpParams) => {
     const res = await axios.post('/api/user', values);
+    // eslint-disable-next-line no-console
     console.log(res.data);
   };
 

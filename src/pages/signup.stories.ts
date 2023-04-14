@@ -9,6 +9,7 @@ const meta = {
   component: Component,
   argTypes: {},
   args: {
+    // eslint-disable-next-line no-console
     onSubmit: async (params: SignUpParams) => console.log(params),
   },
   parameters: {
