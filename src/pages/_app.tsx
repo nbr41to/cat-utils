@@ -15,11 +15,11 @@ const mswSetUp = async () => {
 };
 
 export default function App({ Component, pageProps }: AppProps) {
-  const isDev = process.env.VERCEL_ENV !== 'production';
+  const isDev = process.env.NEXT_PUBLIC_VERCEL_ENV !== 'production';
   const [mswPrepared, setMswPrepared] = useState(!isDev);
 
   useEffect(() => {
-    if (isDev) {
+    if (isDev && !mswPrepared) {
       (async () => {
         await mswSetUp();
         setMswPrepared(true);
@@ -30,8 +30,10 @@ export default function App({ Component, pageProps }: AppProps) {
   if (!mswPrepared) return <LoadingOverlay visible={true} />;
 
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </>
   );
 }

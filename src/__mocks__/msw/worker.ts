@@ -1,9 +1,9 @@
 import { setupWorker } from 'msw';
 import { setupServer } from 'msw/node';
-import { toiletsHandler } from '@/__mocks__/msw/toiletsHandler';
-import { userHandler } from '@/__mocks__/msw/userHandler';
+import { toiletHandlers } from '@/__mocks__/msw/toiletHandlers';
+import { userHandlers } from '@/__mocks__/msw/userHandlers';
 
-const handlers = [toiletsHandler, userHandler];
+const handlers = [...toiletHandlers, ...userHandlers];
 
 export const worker = setupWorker(...handlers);
 export const server = setupServer(...handlers);

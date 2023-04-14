@@ -3,7 +3,7 @@ import { within, userEvent } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 import Component from './signup';
 import { SignUpParams } from '@/types';
-import { userHandler } from '@/__mocks__/msw/userHandler';
+import { userHandler } from '@/__mocks__/msw/userHandlers';
 
 const meta = {
   component: Component,

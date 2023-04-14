@@ -34,6 +34,9 @@ export const Layout: FC<Props> = ({ children }) => {
         onClose={close}
       >
         <div className='flex flex-col gap-2'>
+          <Link href='/' onClick={close}>
+            トップ
+          </Link>
           <Link href='/calculator' onClick={close}>
             計算ツール
           </Link>
