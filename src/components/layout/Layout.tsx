@@ -14,13 +14,13 @@ export const Layout: FC<Props> = ({ children }) => {
   const label = opened ? 'Close navigation' : 'Open navigation';
 
   return (
-    <div className='max-w-[400px] mx-auto bg-pink-50 h-screen relative'>
+    <div className='max-w-[400px] mx-auto bg-pink-50 min-h-screen relative'>
       <header className='bg-pink-200 flex justify-between h-14 items-center px-2'>
         <h1 className='m-0 text-center text-2xl'>cat-utils(App名募集中)</h1>
         <Burger opened={opened} onClick={toggle} aria-label={label} />
       </header>
 
-      <main className='pb-4 my-4 px-4'>{children}</main>
+      <main className='pb-12 my-4 px-4'>{children}</main>
 
       <footer className='bg-pink-200 absolute bottom-0 w-full'>
         <p className='text-center my-1 text-xs'>© 2023 progLearning</p>

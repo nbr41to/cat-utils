@@ -9,8 +9,9 @@ type Props = {
 };
 
 export const SignUpForm: FC<Props> = ({ onSubmit }) => {
-  const form = useForm({
+  const form = useForm<SignUpParams>({
     initialValues: {
+      name: '',
       email: '',
       password: '',
       passwordConfirmation: '',
@@ -21,6 +22,12 @@ export const SignUpForm: FC<Props> = ({ onSubmit }) => {
 
   return (
     <form noValidate onSubmit={form.onSubmit((values) => onSubmit(values))}>
+      <InputBase
+        type='name'
+        label='ユーザー名'
+        error={form.errors.name}
+        {...form.getInputProps('name')}
+      />
       <InputBase
         type='email'
         label='メールアドレス'

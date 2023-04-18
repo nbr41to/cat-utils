@@ -21,7 +21,7 @@ export type Cat = {
   birthDate: Date;
   lifeStage: LifeStageOptionKey;
 };
-export type LifeStageOptionKey = (typeof LIFE_STAGE_OPTIONS)[number]['key'];
+export type LifeStageOptionKey = (typeof LIFE_STAGE_OPTIONS)[number]['value'];
 
 export type CatFood = {
   id: number;

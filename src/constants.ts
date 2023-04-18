@@ -1,17 +1,19 @@
+import { LifeStageOptionKey } from '@/types';
+
 /* Select options */
 export const LIFE_STAGE_OPTIONS = [
-  { label: '子猫（4ヶ月未満）', key: 'kitten-3', value: '3.0' },
-  { label: '子猫（4～6ヶ月）', key: 'kitten-4-6', value: '2.5' },
-  { label: '子猫（7～12ヶ月）', key: 'kitten-7-12', value: '2.0' },
-  { label: '標準体型の成猫（未避妊・未去勢）', key: 'adult', value: '1.4' },
-  { label: '標準体型の成猫（避妊・去勢済）', key: 'fixed-adult', value: '1.2' },
-  { label: '活動的な猫', key: 'active', value: '1.6' },
-  { label: '肥満気味の猫', key: 'obese', value: '1.0' },
-  { label: '病気の猫', key: 'ill', value: '1.00' },
-  { label: 'ダイエット中の猫', key: 'diet', value: '0.8' },
-  { label: '増量中の猫', key: 'gain', value: '1.3' },
-  { label: '高齢猫', key: 'senior', value: '1.1' },
-  { label: '妊娠中', key: 'pregnant', value: '2.00' },
+  { label: '子猫（4ヶ月未満）', value: 'kitten-3' },
+  { label: '子猫（4～6ヶ月）', value: 'kitten-4-6' },
+  { label: '子猫（7～12ヶ月）', value: 'kitten-7-12' },
+  { label: '標準体型の成猫（未避妊・未去勢）', value: 'adult' },
+  { label: '標準体型の成猫（避妊・去勢済）', value: 'fixed-adult' },
+  { label: '活動的な猫', value: 'active' },
+  { label: '肥満気味の猫', value: 'obese' },
+  { label: '病気の猫', value: 'ill' },
+  { label: 'ダイエット中の猫', value: 'diet' },
+  { label: '増量中の猫', value: 'gain' },
+  { label: '高齢猫', value: 'senior' },
+  { label: '妊娠中', value: 'pregnant' },
 ] as const;
 
 export const LIFE_STAGE_KEYS = {
@@ -44,7 +46,7 @@ export const LIFE_STAGE_LABELS = {
   pregnant: '妊娠中',
 } as const;
 
-export const LIFE_STAGE_VALUES = {
+export const LIFE_STAGE_VALUES: Record<LifeStageOptionKey, number> = {
   'kitten-3': 3.0,
   'kitten-4-6': 2.5,
   'kitten-7-12': 2.0,
